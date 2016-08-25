@@ -31,7 +31,7 @@ ShapeView.prototype.constructor = ShapeView;
 
 ShapeView.prototype.paint = function(top, left, bottom, right) {
 	var settings = this.settings,
-		offset = this.settings.offset ? this.settings.offset : { x: 0, y: 0 };
+		offset = this.settings.offset ? this.settings.offset : { x: 0, y: 0 },
 		points = this.settings.shape;
 	
 	this.clear();
@@ -40,12 +40,12 @@ ShapeView.prototype.paint = function(top, left, bottom, right) {
 		this.lineStyle(settings.borderSize, settings.borderColor, settings.borderAlpha);
 	}
 	if(settings.fillAlpha > 0) {
-		this.moveTo.apply(this, points[0].toArray());
+		this.moveTo.apply(this, points[0].clone().add(offset.x, offset.y).toArray());
 		this.beginFill(settings.color, settings.fillAlpha);
 	}
 	if(settings.fillAlpha > 0 || (settings.borderSize > 0 && settings.borderAlpha > 0)) {
 		for(var i = 1; i < points.length; i++)
-			this.lineTo.apply(this, points[i].toArray());
+			this.lineTo.apply(this, points[i].clone().add(offset.x, offset.y).toArray());
 	}
 	if(settings.fillAlpha > 0) {
 		this.endFill();
