@@ -285,6 +285,7 @@ Arrow.prototype.readjust = function(direction) {
 	var ps = this.calcPreferredSize(direction);
 	this.setPreferredSize(ps.width, ps.height);
 	this.sh.settings.shape = this.makeShape(direction);
+	this.sh.settings.offset = this.calcOffset(direction);
 	this.repaint();
 };
 
@@ -301,6 +302,23 @@ Arrow.prototype.calcPreferredSize = function(direction) {
 		case Tooltip.LEFT:
 		case Tooltip.RIGHT:
 			return {width: (size+shapeOffset)*2-offset, height: size*2};
+		default:
+			throw new Error("Invalid Direction");
+	}
+};
+
+// calculates the offset needed to align the arrows
+Arrow.prototype.calcOffset = function(direction) {
+	var offset = this.settings.offset;
+	switch(direction) {
+		case Tooltip.UP:
+			return new Point(0, offset);
+		case Tooltip.LEFT:
+			return new Point(offset, 0);
+		case Tooltip.DOWN:
+			return new Point(0, -offset);
+		case Tooltip.RIGHT:
+			return new Point(-offset, 0);
 		default:
 			throw new Error("Invalid Direction");
 	}
