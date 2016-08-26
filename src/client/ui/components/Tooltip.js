@@ -298,10 +298,10 @@ Arrow.prototype.calcPreferredSize = function(direction) {
 	switch(direction) {
 		case Tooltip.UP:
 		case Tooltip.DOWN:
-			return {width: size*2, height: (size+shapeOffset)*2-offset};
+			return {width: size*2, height: size+shapeOffset-offset};
 		case Tooltip.LEFT:
 		case Tooltip.RIGHT:
-			return {width: (size+shapeOffset)*2-offset, height: size*2};
+			return {width: size+shapeOffset-offset, height: size*2};
 		default:
 			throw new Error("Invalid Direction");
 	}
